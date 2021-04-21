@@ -123,7 +123,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 	if(!packet_fresh) //packet is stale, start over.
 	{
 		if (debug)
-			debugPort->println("ERROR: STALE PACKET");
+			log_e("ERROR: STALE PACKET");
 
 		bytesRead   = 0;
 		state       = find_start_byte;
@@ -176,7 +176,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 				status    = PAYLOAD_ERROR;
 
 				if (debug)
-					debugPort->println("ERROR: PAYLOAD_ERROR");
+					log_e("ERROR: PAYLOAD_ERROR");
 
 				reset();
 				return bytesRead;
@@ -213,7 +213,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 				status    = CRC_ERROR;
 
 				if (debug)
-					debugPort->println("ERROR: CRC_ERROR");
+					log_e("ERROR: CRC_ERROR");
 
 				reset();
 				return bytesRead;
@@ -238,8 +238,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 						callbacks[idByte]();
 					else if (debug)
 					{
-						debugPort->print(F("ERROR: No callback available for packet ID "));
-						debugPort->println(idByte);
+						log_e("ERROR: No callback available for packet ID "+idByte);
 					}
 				}
 				packetStart = 0;	// reset the timer
@@ -250,7 +249,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 			status    = STOP_BYTE_ERROR;
 
 			if (debug)
-				debugPort->println("ERROR: STOP_BYTE_ERROR");
+				log_e("ERROR: STOP_BYTE_ERROR");
 
 			reset();
 			return bytesRead;
@@ -261,8 +260,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 		{
 			if (debug)
 			{
-				debugPort->print("ERROR: Undefined state ");
-				debugPort->println(state);
+				log_e("ERROR: Undefined state "+state);
 			}
 
 			reset();
