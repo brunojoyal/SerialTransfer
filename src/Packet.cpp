@@ -238,7 +238,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 						callbacks[idByte]();
 					else if (debug)
 					{
-						log_e("ERROR: No callback available for packet ID "+idByte);
+						log_e("ERROR: No callback available for packet ID %hhx",idByte);
 					}
 				}
 				packetStart = 0;	// reset the timer
@@ -260,7 +260,7 @@ uint8_t Packet::parse(const uint8_t& recChar, const bool& valid)
 		{
 			if (debug)
 			{
-				log_e("ERROR: Undefined state "+state);
+				log_e("ERROR: Undefined state %s", state);
 			}
 
 			reset();
